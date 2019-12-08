@@ -3,6 +3,7 @@ from urllib.parse import quote
 import json
 
 headers = {
+    'authority': 'music.163.com',
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36'
 }
 
@@ -28,7 +29,11 @@ def lyric(id, name=None):
     if content['code'] == 200:
         file = save_dir + (str(id) if name is None else name) + '.txt'
         with open(file, 'w') as f:
-            f.write(content['lyric'])
+            l = content.get('lyric', None)
+            if l is not None:
+                f.write(l)
+            else:
+                print('No lyric')
 
 
 def search(s, offset=0, limit=10, t=1):
@@ -62,6 +67,6 @@ def search(s, offset=0, limit=10, t=1):
     
 
 if __name__ == "__main__":
-    search('山楂树之恋')
-    music(1381755293, name='山楂树之恋')
-    lyric(1381755293, name='山楂树之恋')
+    search('Only if you want to')
+    music(2530439, name='Only If You Want To')
+    lyric(2530439, name='Only If You Want To')
